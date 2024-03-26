@@ -11,31 +11,12 @@ public class Grades<T extends Comparable<T>> {
    
 
    public void reverse() {
-      int head = 0;
-      int tail = grades.length - 1;
-      while (head<tail) {
-         T temp = grades[head];
-         grades[head] = grades[tail];
-         grades[tail] = temp;
-         head++;
-         tail--;
-     }
+      Algorithms.reverse(grades);
    }
 
    
    public void sort() {  
-      boolean swapped;
-      do{
-         swapped=false;
-         for(int i=1; i<grades.length;i++){
-            if (grades[i-1].compareTo(grades[i])>0) {
-               T temp = grades[i-1];
-               grades[i-1]=grades[i];
-               grades[i]= temp;
-               swapped = true;
-            }
-         }
-      } while (swapped);
+      Algorithms.sort(grades);
    }
 
    public T [] getArray() {
