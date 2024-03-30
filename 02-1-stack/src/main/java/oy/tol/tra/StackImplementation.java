@@ -51,6 +51,7 @@ public class StackImplementation<E> implements StackInterface<E> {
      }
    E poppedElement = (E) itemArray[currentIndex];
      currentIndex--;
+     itemArray[currentIndex] = null;
      return poppedElement;
    }
 
