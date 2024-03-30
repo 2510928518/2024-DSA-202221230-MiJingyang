@@ -28,23 +28,19 @@ public class StackImplementation<E> implements StackInterface<E> {
    }
 
    public void push(E element) throws StackAllocationException, NullPointerException {
-      if (this.size() == this.capacity()) {
-         Object[] tmp = new Object[this.capacity * 2 + 1];
-
-         for(int i = 0; i < this.itemArray.length; ++i) {
-            tmp[i] = this.itemArray[i];
-         }
-
-         this.itemArray = tmp;
-         tmp = null;
-         this.capacity = this.capacity * 2 + 1;
+      if(element==null){
+         throw new NullPointerException();
       }
-
-      if (element == null) {
-         throw new NullPointerException("Cannot push null element onto the stack.");
-      } else {
-         this.itemArray[++this.currentIndex] = element;
-      }         
+      if(size()==capacity()){
+         Object[] tmp=new Object[this.capacity*2+1];
+         for (int i = 0; i < itemArray.length; i++) {
+            tmp[i]=itemArray[i];
+         }
+         itemArray=tmp;
+         tmp=null;
+         capacity=capacity*2+1;
+      }
+      itemArray[++currentIndex]=element;      
    }
    
    @SuppressWarnings("unchecked")
