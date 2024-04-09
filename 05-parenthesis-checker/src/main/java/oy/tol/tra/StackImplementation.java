@@ -1,5 +1,6 @@
 package oy.tol.tra;
 
+
 public class StackImplementation<E> implements StackInterface<E> {
 
    private Object [] itemArray;
@@ -7,26 +8,34 @@ public class StackImplementation<E> implements StackInterface<E> {
    private int currentIndex = -1;
    private static final int DEFAULT_STACK_SIZE = 10;
 
-
+   /**
+    * Allocates a stack with a default capacity.
+    * @throws StackAllocationException
+    */
    public StackImplementation() throws StackAllocationException {
-    this (DEFAULT_STACK_SIZE); 
+      capacity=DEFAULT_STACK_SIZE;
+      itemArray=new Object[DEFAULT_STACK_SIZE];
    }
 
+   /**
+    * @param capacity The capacity of the stack.
+    * @throws StackAllocationException If cannot allocate room for the internal array.
+    */
    public StackImplementation(int capacity) throws StackAllocationException {
-      if (capacity<2){
-         throw new StackAllocationException("Capacity must be at least 2.");
-      }else {
-         this.capacity = capacity;
-         this.itemArray = new Object[capacity];
+      if(capacity<2){ 
+         throw new StackAllocationException("Capacity is too small!");
       }
-
+      this.capacity=capacity;
+      itemArray=new Object[capacity];
    }
 
+   @Override
    public int capacity() {
       return this.capacity;
       
    }
 
+   @Override
    public void push(E element) throws StackAllocationException, NullPointerException {
       if(element==null){
          throw new NullPointerException();
@@ -42,44 +51,44 @@ public class StackImplementation<E> implements StackInterface<E> {
       }
       itemArray[++currentIndex]=element;      
    }
-   
+
    @SuppressWarnings("unchecked")
    @Override
    public E pop() throws StackIsEmptyException {
-      if (isEmpty()) {
-         throw new StackIsEmptyException("Stack is empty.");
-     }
-   E poppedElement = (E) itemArray[currentIndex];
-     currentIndex--;
-     itemArray[currentIndex] = null;
-     return poppedElement;
+      if(isEmpty()){
+         throw new StackIsEmptyException("Stack is empty");
+      }
+      E returnVal=(E)itemArray[currentIndex];
+      itemArray[currentIndex]=null;
+      currentIndex--;
+      return returnVal;
    }
 
    @SuppressWarnings("unchecked")
    @Override
    public E peek() throws StackIsEmptyException {
-      if (isEmpty()) {
-         throw new StackIsEmptyException("Stack is empty.");
-     }
-
-     return (E) itemArray[currentIndex]; 
+      if(isEmpty()){
+         throw new StackIsEmptyException("Stack is empty");
+      }
+      return (E)itemArray[currentIndex];
    }
 
    @Override
    public int size() {
-      return this.currentIndex +1;
+      return currentIndex+1;
       
    }
 
    @Override
    public void clear() {
-      currentIndex = -1;
+      itemArray=new Object[capacity];
+      currentIndex=-1;
       
    }
 
    @Override
    public boolean isEmpty() {
-      return this.currentIndex == -1;
+      return currentIndex==-1;
       
    }
 
